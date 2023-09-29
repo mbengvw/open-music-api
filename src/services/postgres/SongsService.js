@@ -10,8 +10,10 @@ class SongsService {
     this._pool = new Pool();
   }
 
-  async addSong({ title, year, genre, performer, duration, albumId }) {
-    const id = nanoid(16);
+  async addSong({
+    title, year, genre, performer, duration, albumId,
+  }) {
+    const id = `songs-${nanoid(16)}`;
     const createdAt = new Date().toISOString();
     const updatedAt = createdAt;
 
@@ -76,7 +78,9 @@ class SongsService {
     return result.rows.map(mapDBToSongModel)[0];
   }
 
-  async editSongById(id, { title, year, genre, performer, duration, albumId }) {
+  async editSongById(id, {
+    title, year, genre, performer, duration, albumId,
+  }) {
     const updatedAt = new Date().toISOString();
     const query = {
       text: 'UPDATE songs SET title=$1,year=$2,genre=$3,performer=$4,duration=$5,"albumId"=$6,updated_at=$7 WHERE id=$8 RETURNING id',
